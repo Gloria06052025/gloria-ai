@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIN 567 - FinTech Strategy Project</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Navigation Sidebar */
+        .nav-sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 20px;
+        }
+
+        .nav-header h2 {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .nav-header p {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-bottom: 5px;
+        }
+
+        .nav-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-menu a:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-left-color: #fff;
+            padding-left: 25px;
+        }
+
+        .nav-menu a.active {
+            background-color: rgba(255,255,255,0.2);
+            border-left-color: #fff;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 30px;
+            background-color: white;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-banner {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header-banner h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header-banner .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .course-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2a5298;
+        }
+
+        h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #2a5298;
+            margin: 20px 0 15px 0;
+            font-size: 1.3em;
+        }
+
+        .outcomes-list {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .outcome-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #2a5298;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .assignment-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .assignment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .grade-weight {
+            display: inline-block;
+            background: #2a5298;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .grading-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .grading-table th,
+        .grading-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .grading-table th {
+            background: #2a5298;
+            color: white;
+            font-weight: bold;
+        }
+
+        .grading-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .step-container {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #2a5298;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #2a5298;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .highlight-box {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .nav-sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .nav-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .header-banner h1 {
+                font-size: 2em;
+            }
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #2a5298;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰ Menu</button>
+
+    <div class="container">
+        <!-- Navigation Sidebar -->
+        <nav class="nav-sidebar" id="sidebar">
+            <div class="nav-header">
+                <h2>FIN 567</h2>
+                <p>FinTech Strategy Project</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showSection('overview')" class="active">Course Overview</a></li>
+                <li><a href="#" onclick="showSection('info')">Course Info</a></li>
+                <li><a href="#" onclick="showSection('outcomes')">Learning Outcomes</a></li>
+                <li><a href="#" onclick="showSection('assignments')">Assignments</a></li>
+                <li><a href="#" onclick="showSection('project')">FinTech Strategy Project</a></li>
+                <li><a href="#" onclick="showSection('grading')">Grading</a></li>
+                <li><a href="#" onclick="showSection('policies')">Course Policies</a></li>
+                <li><a href="#" onclick="showSection('university')">University Policies</a></li>
+                <li><a href="#" onclick="showSection('support')">Support Services</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <div id="overview" class="content-section active">
+                <div class="header-banner">
+                    <h1>FIN 567 - FinTech Strategy Project</h1>
+                    <div class="subtitle">School of Business and Management • 3 Credits</div>
+                </div>
+
+                <div class="course-info">
+                    <h3>Course Description</h3>
+                    <p>FinTech Strategy Project serves as the capstone for the FinTech course series, synthesizing knowledge from blockchain, machine learning, AI, big data, and disruptive financial models. Students explore real-world challenges and opportunities in the financial industry and apply innovative FinTech strategies to address them. Through case analysis and strategic planning, learners identify key trends, assess organizational needs, and develop actionable roadmaps for implementation. The course emphasizes critical thinking, collaboration, and practical problem-solving. By completing the main project, students gain hands-on experience in crafting impactful strategies that integrate cutting-edge FinTech solutions to drive measurable business outcomes.</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>Prerequisites</h3>
+                    <p><strong>FIN 560, FIN 563, and FIN 565</strong></p>
+                    <p><em>Access to the Internet is required. All written assignments must be in Microsoft-Word-compatible formats.</em></p>
+                </div>
+            </div>
+
+            <!-- Course Info Section -->
+            <div id="info" class="content-section">
+                <h2>Course Information</h2>
+                
+                <div class="contact-info">
+                    <h3>Faculty & Contact Information</h3>
+                    <p>Professional experience and contact information for instructors can be found under <strong>Syllabus, Schedule, and Course Team</strong> in the online course menu.</p>
+                </div>
+
+                <h3>Course Resources</h3>
+                <p>Required and recommended resources to complete coursework and assignments are found on the course <a href="https://cityu.alma.exlibrisgroup.com/leganto/login?auth=SAML" target="_blank">Reading List</a>. Access is provided through the Reading List link in your online course as well as from the library homepage.</p>
+
+                <div class="highlight-box">
+                    <p><strong>Note:</strong> Required resources that must be purchased by the student are tagged "Purchase from a vendor of your choosing." Required resources with a direct link, "Available through CityU Library", are available electronically at no cost to students.</p>
+                </div>
+
+                <p>Students in Canada may purchase course resources from the <a href="https://www.cityubookstore.ca/index.asp" target="_blank">Canada Bookstore</a>, and students outside the U.S. and Canada should contact their advisor or textbook coordinator for additional information.</p>
+            </div>
+
+            <!-- Learning Outcomes Section -->
+            <div id="outcomes" class="content-section">
+                <h2>Course Outcomes</h2>
+                <p>This course will prepare students to:</p>
+
+                <div class="outcomes-list">
+                    <div class="outcome-item">
+                        <strong>CO.1</strong> - Identify key challenges and opportunities in financial services where FinTech innovations can drive value. <em>(FinTech Strategy)</em>
+                    </div>
+                    <div class="outcome-item">
+                        <strong>CO.2</strong> - Analyze a company's micro and macro-environment to determine how blockchain, AI, big data, or other technology solutions can address specific business needs. <em>(FinTech Strategy)</em>
+                    </div>
+                    <div class="outcome-item">
+                        <strong>CO.3</strong> - Design an innovative FinTech strategy that integrates concepts from relevant technologies and disruptive financial models. <em>(FinTech Strategy)</em>
+                    </div>
+                    <div class="outcome-item">
+                        <strong>CO.4</strong> - Evaluate the feasibility and potential risks of proposed FinTech solutions using strategic frameworks and evidence-based reasoning. <em>(FinTech Strategy)</em>
+                    </div>
+                    <div class="outcome-item">
+                        <strong>CO.5</strong> - Develop a comprehensive implementation roadmap for a FinTech solution that includes resource allocation, risk mitigation strategies, and performance measurement criteria. <em>(FinTech Strategy)</em>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assignments Section -->
+            <div id="assignments" class="content-section">
+                <h2>Course Assignments and Grading</h2>
+                
+                <table class="grading-table">
+                    <thead>
+                        <tr>
+                            <th>Assignment</th>
+                            <th>Percentage of Final Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>FinTech Strategy (Paper and Presentation): Innovative Solutions for Industry Challenges</td>
+                            <td><strong>70%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Instructor Determined Assignments and Activities</td>
+                            <td><strong>30%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="assignment-card">
+                    <div class="grade-weight">30% of Final Grade</div>
+                    <h3>Instructor Determined Assignments</h3>
+                    <p>The instructor will determine a set of activities that support the course outcomes and major assignments of the class. These activities could include collaboration, discussion, participation, peer-review, learning reflections, learning checks or other activities online or in-class.</p>
+                    
+                    <h4>Grading Breakdown:</h4>
+                    <ul>
+                        <li><strong>Quality of Content:</strong> 50%</li>
+                        <li><strong>Quantity of Responses:</strong> 30%</li>
+                        <li><strong>Timeliness:</strong> 20%</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- FinTech Strategy Project Section -->
+            <div id="project" class="content-section">
+                <h2>FinTech Strategy Project</h2>
+                
+                <div class="assignment-card">
+                    <div class="grade-weight">70% of Final Grade</div>
+                    <h3>Innovative Solutions for Industry Challenges</h3>
+                    <p><strong>Covers Course Outcomes:</strong> CO1-5</p>
+                    
+                    <h4>Objective:</h4>
+                    <p>Students will leverage insights and knowledge gained from the three preceding courses—Machine Learning, AI, and Big Data Usage in Finance, Crypto Assets, ICO's, and Disruptive Models, and Advances in Blockchain and Distributed Ledgers—to design an innovative, actionable, and effective strategy for addressing a real-world problem or opportunity in their selected company or scenario.</p>
+
+                    <h4>Assignment Description:</h4>
+                    <p>Students will act as a FinTech strategy consultant for a real-world company of their choice, approved by the instructor. The project requires the identification of a significant financial, operational, or market challenge or opportunity within the organization.</p>
+                </div>
+
+                <h3>Project Steps</h3>
+
+                <div class="step-container">
+                    <span class="step-number">1</span>
+                    <h4>Select a Company or Scenario</h4>
+                    <ul>
+                        <li>Choose a company or industry scenario where FinTech innovation is relevant</li>
+                        <li>Consult with a CityU librarian early in the term to refine your choice</li>
+                        <li>Avoid large companies (e.g., Apple, Tesla) unless focusing on niche problems</li>
+                        <li>Mid-size companies, startups, or industries in transformation are recommended</li>
+                        <li>Submit a one-paragraph proposal for approval by Week 2</li>
+                    </ul>
+                </div>
+
+                <div class="step-container">
+                    <span class="step-number">2</span>
+                    <h4>Research and Analyze</h4>
+                    <p>Conduct an in-depth analysis of the chosen company and its operating environment:</p>
+                    <ul>
+                        <li><strong>Contextual Analysis:</strong> Examine the company's business model, competitive position, and macro/micro-environment</li>
+                        <li><strong>Challenges/Opportunities:</strong> Identify and justify a specific pain point or opportunity where FinTech could provide value</li>
+                        <li><strong>Technical Prerequisites:</strong> Investigate the organization's current technological infrastructure</li>
+                        <li><strong>Data Acquisition Process:</strong> Outline how the company can acquire, manage, and secure required data</li>
+                    </ul>
+                </div>
+
+                <div class="step-container">
+                    <span class="step-number">3</span>
+                    <h4>Develop and Justify the Strategy</h4>
+                    <ul>
+                        <li>Articulate the Problem/Opportunity</li>
+                        <li>Propose an Innovative Solution and Supporting Infrastructure</li>
+                        <li>Design the Strategic Framework using data-driven arguments</li>
+                        <li>Utilize frameworks such as TWOS Matrix or SWOT</li>
+                        <li>Conduct Cost-Benefit Analysis</li>
+                    </ul>
+                </div>
+
+                <div class="step-container">
+                    <span class="step-number">4</span>
+                    <h4>Build an Implementation Plan</h4>
+                    <ul>
+                        <li><strong>Resource Allocation:</strong> Outline technological, human, and financial resources</li>
+                        <li><strong>Operational Plan:</strong> Describe integration into existing processes</li>
+                        <li><strong>Risk Management:</strong> Identify risks and propose mitigation strategies</li>
+                        <li><strong>Measurement:</strong> Define KPIs to measure strategy success</li>
+                    </ul>
+                </div>
+
+                <h3>Major Deliverables</h3>
+                <div class="highlight-box">
+                    <h4>Strategic Plan Document:</h4>
+                    <p>15-20 pages (excluding cover and reference pages). APA writing conventions with minimum of ten sources referenced and cited.</p>
+                    
+                    <h4>Presentation:</h4>
+                    <p>Professional, executive-level presentation (12-15 slides, approximately 15 minutes). Online students should record and submit narrated presentation.</p>
+                </div>
+
+                <h3>Project Component Grading</h3>
+                <table class="grading-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Company Case Proposal</td><td>5%</td></tr>
+                        <tr><td>Research and Contextual Analysis</td><td>15%</td></tr>
+                        <tr><td>FinTech Strategy and Infrastructure Development</td><td>20%</td></tr>
+                        <tr><td>Strategic Justification and Framework Application</td><td>15%</td></tr>
+                        <tr><td>Implementation Plan</td><td>15%</td></tr>
+                        <tr><td>Presentation</td><td>10%</td></tr>
+                        <tr><td>Writing and Organization</td><td>10%</td></tr>
+                        <tr><td>Citing and Articulation</td><td>10%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Grading Section -->
+            <div id="grading" class="content-section">
+                <h2>Grading Scale</h2>
+                <p>The grades earned for the course will be calculated using City University of Seattle's decimal grading system, found in the current University Catalog.</p>
+                
+                <div class="highlight-box">
+                    <p><strong>Important:</strong> Grading rubrics with details on how each assignment will be graded are located under <em>Assignments</em> and/or in <em>My Grades</em> in the online course menu. Students should review the rubric for each assignment prior to completing their work in order to understand how it will be assessed.</p>
+                </div>
+            </div>
+
+            <!-- Course Policies Section -->
+            <div id="policies" class="content-section">
+                <h2>Course Policies</h2>
+                
+                <div class="assignment-card">
+                    <h3>Late Assignments</h3>
+                    <p>A critical aspect of management is to meet predefined deadlines. Therefore, all assignments are expected to be submitted when due. <strong>No late assignments are accepted.</strong></p>
+                    
+                    <p>Life-situations do occur. When an issue arises, coordinate with the instructor prior to the assignment's due date and the due date may be adjusted. It is in the best interest of the student to ensure that all assignments are submitted on time.</p>
+                </div>
+            </div>
+
+            <!-- University Policies Section -->
+            <div id="university" class="content-section">
+                <h2>University Policies</h2>
+                <p>Students are responsible for understanding and adhering to all of City University of Seattle's academic policies. The most current versions of these policies can be found in the <a href="http://www.cityu.edu/catalog/" target="_blank">University Catalog</a>.</p>
+
+                <h3>Antidiscrimination</h3>
+                <p>City University of Seattle and its staff and faculty are committed to supporting our students. We value equity, diversity, and inclusion as a way of life as well as the educational opportunities it provides. City U will not tolerate any form of discrimination based on race, color, ethnicity, sexual orientation, gender identification, socioeconomic status, or religious values.</p>
+
+                <h3>Academic Integrity</h3>
+                <p>Academic integrity in students requires the pursuit of scholarly activity that is free from fraud, deception and unauthorized collaboration with other individuals. Students are responsible for understanding CityU's policy on academic integrity and adhering to its standards in meeting all course requirements.</p>
+
+                <h3>Attendance</h3>
+                <p>Students taking courses in any format at the University are expected to be diligent in their studies and to attend class regularly. Regular class attendance is important in achieving learning outcomes in the course and may be a valid consideration in determining the final grade.</p>
+
+                <h3>Religious Accommodations</h3>
+                <p>City University of Seattle has a policy for accommodation of student absences or significant hardship due to reasons of faith or conscience, or for organized religious activities. Accommodations must be requested by the 20% mark of this course using the Religious Accommodations Request Form.</p>
+            </div>
+
+            <!-- Support Services Section -->
+            <div id="support" class="content-section">
+                <h2>Support Services</h2>
+
+                <div class="assignment-card">
+                    <h3>Disability Services</h3>
+                    <p>Students with a documented disability who wish to request academic accommodations are encouraged to contact Disability Support Services to discuss accommodation requests and eligibility requirements.</p>
+                    <p><strong>Contact:</strong> <a href="mailto:disability@cityu.edu">disability@cityu.edu</a> or 206.239.4752</p>
+                </div>
+
+                <div class="assignment-card">
+                    <h3>Library Services</h3>
+                    <p>CityU librarians are available to help students find the resources and information they need to succeed in this course. Contact a CityU librarian through the <a href="https://cityu-seattle.libanswers.com/" target="_blank">Ask a Librarian</a> service, or access library resources and services online, 24 hours a day, seven days a week.</p>
+                </div>
+
+                <div class="assignment-card">
+                    <h3>Brainfuse</h3>
+                    <p>CityU students have access to free online tutoring offered through Brainfuse, including writing support, from certified tutors 24 hours a day, seven days a week. Visit the Brainfuse page on the my.cityu.edu portal for more information.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Update navigation active state
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to clicked link
+            event.target.classList.add('active');
+
+            // Close mobile menu if open
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(event.target) && 
+                !menuBtn.contains(event.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>
