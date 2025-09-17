@@ -1,0 +1,701 @@
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIN 567 - FinTech Strategy Project Schedule</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1976d2 0%, #1565c0 100%);
+            color: white;
+            padding: 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            background: rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .sidebar h1 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .sidebar .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin: 5px 0;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: #64b5f6;
+            padding-left: 25px;
+        }
+
+        .nav-link.active {
+            background: rgba(255,255,255,0.15);
+            border-left-color: #ffffff;
+            font-weight: 600;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .module-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .module-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, #1976d2, #42a5f5);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(25, 118, 210, 0.3);
+        }
+
+        .module-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .module-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .week-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #1976d2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .week-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.12);
+        }
+
+        .week-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+
+        .topics-section {
+            margin: 20px 0;
+        }
+
+        .topics-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .topic-item {
+            background: #f5f5f5;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 3px solid #42a5f5;
+        }
+
+        .assignments-section {
+            margin: 20px 0;
+        }
+
+        .assignment-item {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #1976d2;
+            font-weight: 500;
+        }
+
+        .due-date {
+            color: #d32f2f;
+            font-weight: 600;
+        }
+
+        .readings-section {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+            margin: 15px 0;
+        }
+
+        .instructor-image {
+            text-align: center;
+            margin: 40px 0 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+        }
+
+        .instructor-image img {
+            max-width: 150px;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .overview-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            border-top: 4px solid #1976d2;
+        }
+
+        .overview-card h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #1976d2;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -23px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #1976d2;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1>FIN 567</h1>
+                <p class="subtitle">FinTech Strategy Project</p>
+                <p class="subtitle">Summer 2025/2026</p>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#overview" class="nav-link active" onclick="showSection('overview', this)">Course Overview</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#module1" class="nav-link" onclick="showSection('module1', this)">Module 1: Introduction</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#module2" class="nav-link" onclick="showSection('module2', this)">Module 2: Research & Analysis</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#module3" class="nav-link" onclick="showSection('module3', this)">Module 3: Strategy Development</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#module4" class="nav-link" onclick="showSection('module4', this)">Module 4: Strategic Framework</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#module5" class="nav-link" onclick="showSection('module5', this)">Module 5: Implementation</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- Course Overview Section -->
+            <section id="overview" class="module-section active">
+                <div class="module-header">
+                    <h1 class="module-title">FIN 567 - FinTech Strategy Project</h1>
+                    <p class="module-subtitle">Summer 2025/2026 Course Schedule</p>
+                </div>
+                
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h3>Course Structure</h3>
+                        <p>This 10-week course is organized into 5 comprehensive modules, each building upon the previous to develop a complete FinTech strategy project. Students will work progressively through research, analysis, strategy development, and implementation planning.</p>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <h3>Key Deliverables</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <strong>Week 2:</strong> Project Proposal
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Week 4:</strong> Research Summary Draft
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Week 6:</strong> Solution Proposal Draft
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Week 8:</strong> Strategic Justification Draft
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Week 10:</strong> Final Strategic Plan & Presentation
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <h3>Learning Approach</h3>
+                        <p>Each module includes peer learning discussions, progressive drafts, and instructor feedback. Students will engage with cutting-edge FinTech concepts while developing practical strategic planning skills.</p>
+                    </div>
+                </div>
+
+                <div class="instructor-image">
+                    <img src="data:image/jpeg;base64,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
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIN 567 - FinTech Strategy Project Schedule</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #e3f2fd 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1976d2 0%, #1565c0 100%);
+            color: white;
+            padding: 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            background: rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .sidebar h1 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .sidebar .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin: 5px 0;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: #64b5f6;
+            padding-left: 25px;
+        }
+
+        .nav-link.active {
+            background: rgba(255,255,255,0.15);
+            border-left-color: #ffffff;
+            font-weight: 600;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .module-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .module-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .module-header {
+            background: linear-gradient(135deg, #1976d2, #42a5f5);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(25, 118, 210, 0.3);
+        }
+
+        .module-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .module-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .week-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #1976d2;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .week-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.12);
+        }
+
+        .week-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+
+        .topics-section {
+            margin: 20px 0;
+        }
+
+        .topics-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .topic-item {
+            background: #f5f5f5;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 3px solid #42a5f5;
+        }
+
+        .assignments-section {
+            margin: 20px 0;
+        }
+
+        .assignment-item {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #1976d2;
+            font-weight: 500;
+        }
+
+        .due-date {
+            color: #d32f2f;
+            font-weight: 600;
+        }
+
+        .readings-section {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+            margin: 15px 0;
+        }
+
+        .instructor-image {
+            text-align: center;
+            margin: 40px 0 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+        }
+
+        .instructor-image img {
+            max-width: 150px;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .overview-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            border-top: 4px solid #1976d2;
+        }
+
+        .overview-card h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #1976d2;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -23px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #1976d2;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1>FIN 567</h1>
+                <p class="subtitle">FinTech Strategy Project</p>
+                <p class="subtitle">Summer 2025/2026</p>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#overview" class="nav-link active" onclick="showSection('overview', this)">Course Overview</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#module1" class="nav-link" onclick="showSection('module1', this)">Module 1: Introduction</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#module2" class="nav-link" onclick="showSection('module2', this)">Module 2: Research & Analysis</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#module3" class="nav-link" onclick="showSection('module3', this)">Module 3: Strategy Development</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#module4" class="nav-link" onclick="showSection('module4', this)">Module 4: Strategic Framework</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#module5" class="nav-link" onclick="showSection('module5', this)">Module 5: Implementation</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <!-- Course Overview Section -->
+            <section id="overview" class="module-section active">
+                <div class="module-header">
+                    <h1 class="module-title">FIN 567 - FinTech Strategy Project</h1>
+                    <p class="module-subtitle">Summer 2025/2026 Course Schedule</p>
+                </div>
+                
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h3>Course Structure</h3>
+                        <p>This 10-week course is organized into 5 comprehensive modules, each building upon the previous to develop a complete FinTech strategy project. Students will work progressively through research, analysis, strategy development, and implementation planning.</p>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <h3>Key Deliverables</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <strong>Week 2:</strong> Project Proposal
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Week 4:</strong> Research Summary Draft
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Week 6:</strong> Solution Proposal Draft
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Week 8:</strong> Strategic Justification Draft
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Week 10:</strong> Final Strategic Plan & Presentation
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <h3>Learning Approach</h3>
+                        <p>Each module includes peer learning discussions, progressive drafts, and instructor feedback. Students will engage with cutting-edge FinTech concepts while developing practical strategic planning skills.</p>
+                    </div>
+                </div>
+
+                <div class="instructor-image">
+                    <img src="data:image/jpeg;base64,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
